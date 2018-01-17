@@ -37,7 +37,9 @@ class PostList extends Component {
                         key={post.id}
                         title={`${post.title}`}
                         body={post.body}
-                        footer={`Author: ${post.author}, Category: ${post.category}`}
+                        category={post.category}
+                        author={post.author}
+                        footer={`Rodape`}
                     />
                 )}
             </div>

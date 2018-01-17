@@ -8,7 +8,13 @@ function Post (props) {
             <Panel.Heading>
                 <Panel.Title componentClass="h3">{props.title}</Panel.Title>
             </Panel.Heading>
-            <Panel.Body>{props.body}</Panel.Body>
+            <Panel.Body>
+                <p>{props.body}</p>
+                <div>
+                    <small>Author: {props.author}</small><br />
+                    <small>Category: {props.category}</small>
+                </div>
+            </Panel.Body>
             <Panel.Footer>{props.footer}</Panel.Footer>
         </Panel>
     )
