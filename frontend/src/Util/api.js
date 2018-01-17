@@ -7,12 +7,12 @@ const headers = {
     'Authorization': token
 }
 
-export const getAllPosts = () =>
+export const getAllPostsAPI = () =>
     fetch(`${api}/posts`, { headers })
         .then(res => res.json())
         .then(data => data)
 
-export const createPost = (body) =>
+export const createPostAPI = (body) =>
     fetch(`${api}/posts`, {
         method: 'POST',
         headers: {

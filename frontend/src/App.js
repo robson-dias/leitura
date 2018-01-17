@@ -1,9 +1,32 @@
 import React, { Component } from 'react'
 import './App.css'
+import { getAllPostsAPI, createPostAPI } from './Util/api'
 import PostList from './Components/PostList'
 import PostCreate from './Components/PostCreate'
 
 class App extends Component {
+
+  state = {
+    posts: []
+  }
+
+  getAllPosts = () => {
+    getAllPostsAPI().then((posts) => {
+      this.setState({ posts })
+    })
+  }
+
+  createPost = (post) => {
+
+    console.log(post)
+
+    createPostAPI(post).then(post => {
+      this.setState(state => ({
+        posts: state.posts.concat([post])
+      }))
+    })
+  }
+
   render() {
     return (
       <div className="container">
@@ -28,13 +51,20 @@ class App extends Component {
                 
               </ul>
               <ul className="nav navbar-nav navbar-right" style={{marginTop: '7px'}}>
-                <li><PostCreate /></li>
+                <li>
+                  <PostCreate 
+                    onCreatePost={this.createPost} 
+                  />
+                </li>
               </ul>
             </div>
         </div>
       </nav>
 
-        <PostList />
+      <PostList 
+          posts={this.state.posts}
+          onGetAllPosts={this.getAllPosts}          
+      />
 
       </div>
     );
