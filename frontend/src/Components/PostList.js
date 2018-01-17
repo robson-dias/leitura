@@ -1,34 +1,43 @@
 import React, { Component } from 'react'
 import Post from './Post'
-
+import { getAllPosts } from '../Util/api'
+//import { ulid } from 'ulid'
 
 class PostList extends Component {
+    state = {
+        posts: []
+    }
+    componentDidMount() {
+
+    /*     const postTeste = {
+            id: ulid(),
+            timestamp: Date.now(),
+            title : 'Titulo',
+            body:'Body',
+            author: 'Robson',
+            category: 'react'
+        }
+
+        createPost(postTeste).then(post => {
+            console.log('createPost', post)
+        }) */
+
+        getAllPosts().then((posts) => {
+            this.setState({posts})
+        })
+    }
     render () {
 
-        const posts = [{
-                'title' : 'Title 1',
-                'body': 'Body 1',
-                'footer': 'Footer 1',
-            },
-            {
-                'title': 'Title 2',
-                'body': 'Body 2',
-                'footer': 'Footer 2',
-            },
-            {
-                'title': 'Title 3',
-                'body': 'Body 3',
-                'footer': 'Footer 3',
-            }
-        ]
+        const {posts} = this.state
 
         return (
             <div>
                 {posts.map((post) => 
                     <Post 
-                        title={post.title}
+                        key={post.id}
+                        title={`${post.title}`}
                         body={post.body}
-                        footer={post.footer}
+                        footer={`Author: ${post.author}, Category: ${post.category}`}
                     />
                 )}
             </div>
