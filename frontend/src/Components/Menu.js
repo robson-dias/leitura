@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PostCreate from './PostCreate'
+import CategoryList from './CategoryList'
 
 export default function Menu (props) {
     return (
@@ -10,16 +11,10 @@ export default function Menu (props) {
                     <Link className='navbar-brand' to='/'>Leitura</Link>
                 </div>
                 <div id="navbar" className="navbar-collapse collapse">
-                    <ul className="nav navbar-nav">
-                        <li className={props.match.path === '/' ? 'active' : ''}><Link to='/'>all</Link></li>    
-                        {props.categories.map((category) => 
-                            <li 
-                                key={category.path}
-                                className={props.match.path === `/${category.path}` ? 'active' : ''}>
-                                    <Link to={category.path}>{category.name}</Link>
-                            </li>
-                        )}
-                    </ul>
+                    <CategoryList 
+                        match={props.match}
+                        categories={props.categories}
+                    />
                     <ul className="nav navbar-nav navbar-right" style={{ marginTop: '7px' }}>
                         <li>
                             <PostCreate
