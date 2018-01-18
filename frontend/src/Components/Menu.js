@@ -11,15 +11,15 @@ export default function Menu (props) {
                 </div>
                 <div id="navbar" className="navbar-collapse collapse">
                     <ul className="nav navbar-nav">
-                        <li className={props.match.path === '/' ? 'active' : ''}><Link to='/'>All</Link></li>
-                        <li className={props.match.path === '/react' ? 'active' : ''}><Link to='/react'>React</Link></li>
-                        <li className={props.match.path === '/redux' ? 'active' : ''}><Link to='/redux'>Redux</Link></li>
-                        <li className={props.match.path === '/udacity' ? 'active' : ''}><Link to='/udacity'>Udacity</Link></li>
-
+                        <li className={props.match.path === '/' ? 'active' : ''}><Link to='/'>all</Link></li>    
+                        {props.categories.map((category) => 
+                            <li className={props.match.path === `/${category.path}` ? 'active' : ''}><Link to={`/${category.path}`}>{category.name}</Link></li>
+                        )}
                     </ul>
                     <ul className="nav navbar-nav navbar-right" style={{ marginTop: '7px' }}>
                         <li>
                             <PostCreate
+                                categories={props.categories}
                                 onCreatePost={props.createPost}
                             />
                         </li>

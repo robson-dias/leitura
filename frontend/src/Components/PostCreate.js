@@ -32,6 +32,9 @@ class PostCreate extends Component {
     }
 
     render() {
+
+        const { categories } = this.props
+        
         return (
             <div className="modal-container">
                 <Button
@@ -91,9 +94,7 @@ class PostCreate extends Component {
                                     <ControlLabel>Category</ControlLabel>
                                     <FormControl componentClass="select" placeholder="" name="category">
                                         <option value="">Select</option>    
-                                        <option value="react">React</option>
-                                        <option value="redux">Redux</option>
-                                        <option value="udacity">Udacity</option>
+                                        {categories.map((category) => <option value={category.path}>{category.name}</option>)}
                                     </FormControl>
                                 </FormGroup>
                         </Modal.Body>
