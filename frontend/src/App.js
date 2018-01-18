@@ -9,7 +9,8 @@ class App extends Component {
 
   state = {
     categories: [],
-    posts: []
+    posts: [],
+    order: '-voteScore'
   }
 
   componentDidMount() {
@@ -32,9 +33,13 @@ class App extends Component {
     })
   }
 
+  setOrder = (order) => {
+    this.setState({ order })
+  }
+
   render() {
 
-    const { posts, categories } = this.state
+    const { posts, categories, order } = this.state
 
     return (
       <div className="container">
@@ -49,6 +54,8 @@ class App extends Component {
             <PostList
               posts={posts}
               onGetPosts={this.getPosts}
+              order={order}
+              setOrder={this.setOrder}
             />
           </div>
         )} />
@@ -65,6 +72,8 @@ class App extends Component {
                 category={category.path}
                 posts={posts}
                 onGetPosts={this.getPosts}
+                order={order}
+                setOrder={this.setOrder}
               />
             </div>
           )} />
