@@ -1,7 +1,7 @@
 import React from 'react'
 import {Panel} from 'react-bootstrap'
 
-function Post (props) {
+export default function Post (props) {
    
     return (
         <Panel>
@@ -10,9 +10,9 @@ function Post (props) {
             </Panel.Heading>
             <Panel.Body>
                 <p>{props.body}</p>
+                <hr />
                 <div>
-                    <small>Author: {props.author}</small><br />
-                    <small>Category: {props.category}</small>
+                    <small>Category: {props.category}</small>, <small>Author: {props.author}</small>
                 </div>
             </Panel.Body>
             <Panel.Footer>{props.footer}</Panel.Footer>
@@ -20,5 +20,3 @@ function Post (props) {
     )
     
 }
-
-export default Post

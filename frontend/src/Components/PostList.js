@@ -3,7 +3,7 @@ import Post from './Post'
 
 class PostList extends Component {
     componentDidMount() {
-        this.props.onGetAllPosts();
+        this.props.onGetPosts(this.props.category || '');
     }
 
     render () {

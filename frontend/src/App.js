@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import './App.css'
-import { getAllPostsAPI, createPostAPI } from './Util/api'
+import { getPostsAPI, createPostAPI } from './Util/api'
 import PostList from './Components/PostList'
-import PostCreate from './Components/PostCreate'
+import Menu from './Components/Menu'
 
 class App extends Component {
 
@@ -10,16 +11,13 @@ class App extends Component {
     posts: []
   }
 
-  getAllPosts = () => {
-    getAllPostsAPI().then((posts) => {
+  getPosts = (category) => {
+    getPostsAPI(category).then((posts) => {
       this.setState({ posts })
     })
   }
 
   createPost = (post) => {
-
-    console.log(post)
-
     createPostAPI(post).then(post => {
       this.setState(state => ({
         posts: state.posts.concat([post])
@@ -31,41 +29,61 @@ class App extends Component {
     return (
       <div className="container">
 
-      <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="/navbar" aria-expanded="false" aria-controls="navbar">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-              <a className="navbar-brand" href="/">Leitura</a>
-            </div>
-            <div id="navbar" className="navbar-collapse collapse">
-              <ul className="nav navbar-nav">
-                <li className="active"><a href="/">All</a></li>
-                <li><a href="/">React</a></li>
-                <li><a href="/">Redux</a></li>
-                <li><a href="/">Udacity</a></li>
-                
-              </ul>
-              <ul className="nav navbar-nav navbar-right" style={{marginTop: '7px'}}>
-                <li>
-                  <PostCreate 
-                    onCreatePost={this.createPost} 
-                  />
-                </li>
-              </ul>
-            </div>
-        </div>
-      </nav>
+        <Route exact path='/' render={({ match }) => (
+          <div>
+            <Menu
+              match={match}
+              createPost={this.createPost}
+            />
+            <PostList
+              posts={this.state.posts}
+              onGetPosts={this.getPosts}
+            />
+          </div>
+        )} />
 
-      <PostList 
-          posts={this.state.posts}
-          onGetAllPosts={this.getAllPosts}          
-      />
+        <Route path='/react' render={({ match }) => (
+          <div>
+            <Menu 
+              match={match} 
+              createPost={this.createPost}
+            />
+            <PostList
+              category={'react'}
+              posts={this.state.posts}
+              onGetPosts={this.getPosts}
+            />
+          </div>
+        )} />
 
+        <Route path='/redux' render={({ match }) => (
+          <div>
+            <Menu
+              match={match}
+              createPost={this.createPost}
+            />
+            <PostList
+              category={'redux'}
+              posts={this.state.posts}
+              onGetPosts={this.getPosts}
+            />
+          </div>
+        )} />
+
+        <Route path='/udacity' render={({ match }) => (
+          <div>
+            <Menu
+              match={match}
+              createPost={this.createPost}
+            />
+            <PostList
+              category={'udacity'}
+              posts={this.state.posts}
+              onGetPosts={this.getPosts}
+            />
+          </div>
+        )} />
+      
       </div>
     );
   }

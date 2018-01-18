@@ -7,10 +7,15 @@ const headers = {
     'Authorization': token
 }
 
-export const getAllPostsAPI = () =>
-    fetch(`${api}/posts`, { headers })
+export const getPostsAPI = (category) => {
+    let url = `${api}/posts`
+    if (category)
+        url = `${api}/${category}/posts`
+
+    return fetch(url, { headers })
         .then(res => res.json())
         .then(data => data)
+}
 
 export const createPostAPI = (body) =>
     fetch(`${api}/posts`, {
