@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { Button, Modal, FormGroup, FormControl, ControlLabel, Glyphicon } from 'react-bootstrap'
 import serializeForm from 'form-serialize'
 import { ulid } from 'ulid'
 
@@ -41,7 +41,7 @@ class PostCreate extends Component {
                     bsStyle="primary"
                     onClick={this.handleShow}
                 >
-                    New Post
+                    <Glyphicon glyph="plus" /> New Post
 				</Button>
 
                 <Modal
