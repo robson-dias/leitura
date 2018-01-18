@@ -54,7 +54,7 @@ class App extends Component {
         )} />
 
         {categories.map((category) => 
-          <Route path={`/${category.path}`} render={({ match }) => (
+          <Route key={category.path} path={`/${category.path}`} render={({ match }) => (
             <div>
               <Menu
                 match={match}

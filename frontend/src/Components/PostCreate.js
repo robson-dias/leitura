@@ -94,7 +94,13 @@ class PostCreate extends Component {
                                     <ControlLabel>Category</ControlLabel>
                                     <FormControl componentClass="select" placeholder="" name="category">
                                         <option value="">Select</option>    
-                                        {categories.map((category) => <option value={category.path}>{category.name}</option>)}
+                                        {categories.map((category) => 
+                                            <option 
+                                                key={category.path} 
+                                                value={category.path}>
+                                                {category.name}
+                                            </option>
+                                        )}
                                     </FormControl>
                                 </FormGroup>
                         </Modal.Body>

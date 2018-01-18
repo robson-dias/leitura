@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Post from './Post'
-import { Alert, Button } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 
 class PostList extends Component {
     componentDidMount() {

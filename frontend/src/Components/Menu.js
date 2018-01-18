@@ -13,7 +13,11 @@ export default function Menu (props) {
                     <ul className="nav navbar-nav">
                         <li className={props.match.path === '/' ? 'active' : ''}><Link to='/'>all</Link></li>    
                         {props.categories.map((category) => 
-                            <li className={props.match.path === `/${category.path}` ? 'active' : ''}><Link to={`/${category.path}`}>{category.name}</Link></li>
+                            <li 
+                                key={category.path}
+                                className={props.match.path === `/${category.path}` ? 'active' : ''}>
+                                    <Link to={category.path}>{category.name}</Link>
+                            </li>
                         )}
                     </ul>
                     <ul className="nav navbar-nav navbar-right" style={{ marginTop: '7px' }}>
