@@ -1,33 +1,39 @@
 import { combineReducers } from 'redux'
 
 import {
-    ADD_POST,
+    ADD_POSTS,
+    ADD_CATEGORIES,
+    CREATE_POST
 } from '../Actions'
 
-const initialPostState = {
-    id: null,
-    timestamp: null,
-    title: null,
-    body: null,
-    category: null,
-    author: null,
-    footer: null
+function posts(state = {}, action) {
+
+    switch (action.type) {
+        case ADD_POSTS:
+            const { posts } = action
+            return posts
+
+        case CREATE_POST:
+            const { post } = action
+            return state.concat([post])
+        default:
+            return state
+    }
 }
 
-function post(state = initialPostState, action) {
-    switch (action.type) {
-        case ADD_POST:
-            const { post } = action
+function categories(state = {}, action) {
 
-            return {
-                ...state,
-                post
-            }
+    switch (action.type) {
+        case ADD_CATEGORIES:
+            const { categories } = action
+            return categories
+
         default:
             return state
     }
 }
 
 export default combineReducers({
-    post
+    posts,
+    categories
 })

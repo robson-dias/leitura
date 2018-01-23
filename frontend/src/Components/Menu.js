@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import PostCreate from './PostCreate'
 import CategoryList from './CategoryList'
 
-export default function Menu (props) {
+const Menu = (props) => {
+
+    const { page } = props
+
     return (
         <nav className="navbar navbar-default">
             <div className="container-fluid">
@@ -11,14 +14,10 @@ export default function Menu (props) {
                     <Link className='navbar-brand' to='/'>Leitura</Link>
                 </div>
                 <div id="navbar" className="navbar-collapse collapse">
-                    <CategoryList 
-                        match={props.match}
-                        categories={props.categories}
-                    />
+                    <CategoryList page={page} />
                     <ul className="nav navbar-nav navbar-right" style={{ marginTop: '7px' }}>
                         <li>
                             <PostCreate
-                                categories={props.categories}
                                 onCreatePost={props.createPost}
                             />
                         </li>
@@ -28,4 +27,7 @@ export default function Menu (props) {
         </nav>
     )
 }
+
+export default Menu
+
 

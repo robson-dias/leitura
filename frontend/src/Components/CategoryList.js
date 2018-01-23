@@ -1,17 +1,31 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-export default function CategoryList(props) {
+const CategoryList = (props) => {
+
+    const { categories, page } = props
+
     return (
         <ul className="nav navbar-nav">
-            <li className={props.match.path === '/' ? 'active' : ''}><Link to='/'>all</Link></li>
-            {props.categories.map((category) =>
+            <li className={page === undefined ? 'active' : ''}><Link to='/'>all</Link></li>
+            
+            {categories.length > 0 ? categories.map((category) =>
                 <li
                     key={category.path}
-                    className={props.match.path === `/${category.path}` ? 'active' : ''}>
+                    className={page === category.path ? 'active' : ''}>
                     <Link to={category.path}>{category.name}</Link>
                 </li>
-            )}
+            ) : ''}
         </ul>
     )
 }
+
+function mapStateToProps({ categories }) {
+    return {
+        categories: categories
+    }
+}
+
+
+export default connect(mapStateToProps)(CategoryList)

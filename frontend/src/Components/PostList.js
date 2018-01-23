@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Post from './Post'
 import { Alert } from 'react-bootstrap'
 import sortBy from 'sort-by'
@@ -6,19 +7,24 @@ import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
 
 class PostList extends Component {
-    componentDidMount() {
-        this.props.onGetPosts(this.props.category || '');
-    }
-
     handleOrder = (e) => {
         this.props.setOrder(e.target.value)
     }
 
     render () {
 
-        const {posts, order} = this.props
+        const { posts, order, page } = this.props
 
-        posts.sort(sortBy(order))
+        let postsFiltered = []
+
+        if (posts.length > 0 && page) {
+            postsFiltered = posts.filter(post => post.category === page)
+        } else {
+            postsFiltered = posts
+        }
+
+        if (postsFiltered.length > 0)
+            postsFiltered.sort(sortBy(order))
 
         return (
             <div>
@@ -34,8 +40,8 @@ class PostList extends Component {
 
                 <hr />
 
-                {posts.length > 0 ? 
-                    posts.map((post) => 
+                {postsFiltered.length > 0 ? 
+                    postsFiltered.map((post) => 
                         <Post 
                             key={post.id}
                             post={post}      
@@ -50,4 +56,10 @@ class PostList extends Component {
     }
 }
 
-export default PostList
+function mapStateToProps({ posts }) {
+    return {
+        posts: posts
+    }
+}
+
+export default connect(mapStateToProps)(PostList)

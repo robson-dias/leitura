@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Button, Modal, FormGroup, FormControl, ControlLabel, Glyphicon } from 'react-bootstrap'
 import serializeForm from 'form-serialize'
 import { ulid } from 'ulid'
@@ -94,13 +95,13 @@ class PostCreate extends Component {
                                     <ControlLabel>Category</ControlLabel>
                                     <FormControl componentClass="select" placeholder="" name="category">
                                         <option value="">Select</option>    
-                                        {categories.map((category) => 
+                                        {categories.length > 0 ? categories.map((category) => 
                                             <option 
                                                 key={category.path} 
                                                 value={category.path}>
                                                 {category.name}
                                             </option>
-                                        )}
+                                        ) : ''}
                                     </FormControl>
                                 </FormGroup>
                         </Modal.Body>
@@ -115,4 +116,10 @@ class PostCreate extends Component {
     }
 }
 
-export default PostCreate
+function mapStateToProps({ categories }) {
+    return {
+        categories: categories
+    }
+}
+
+export default connect(mapStateToProps)(PostCreate)
