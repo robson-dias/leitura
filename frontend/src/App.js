@@ -20,7 +20,6 @@ class App extends Component {
     })
 
     getPostsAPI().then((posts) => {
-      console.log('posts1', posts)
       this.props.addPosts({ posts })
     })
     
@@ -28,9 +27,7 @@ class App extends Component {
 
   createPost = (post) => {
     createPostAPI(post).then(post => {
-      //console.log('post', post)
       this.props.createPost({post})
-      //this.props.addPosts({ posts, post })
     }) 
   }
 
