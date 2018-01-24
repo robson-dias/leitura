@@ -3,19 +3,24 @@ import { combineReducers } from 'redux'
 import {
     ADD_POSTS,
     ADD_CATEGORIES,
-    CREATE_POST
+    CREATE_POST,
+    EDIT_POST
 } from '../Actions'
 
 function posts(state = {}, action) {
 
     switch (action.type) {
         case ADD_POSTS:
-            const { posts } = action
-            return posts
+            return action.posts
 
         case CREATE_POST:
+            return state.concat([action.post])
+
+        case EDIT_POST:
             const { post } = action
-            return state.concat([post])
+
+            return state.map((statePost) => statePost.id === post.id ? post : statePost)
+
         default:
             return state
     }

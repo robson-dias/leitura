@@ -1,9 +1,10 @@
 import React from 'react'
-import {Panel} from 'react-bootstrap'
+import { Panel, Button, Glyphicon, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import PostEdit from './PostEdit'
 
 export default function Post (props) {
    
-    const { post } = props
+    const { post, onEditPost } = props
 
     const datePost = new Date(post.timestamp)
 
@@ -18,7 +19,24 @@ export default function Post (props) {
     return (
         <Panel>
             <Panel.Heading>
-                <Panel.Title componentClass="h3"><b>{post.title}</b><br /><small>Postado em: {dateFullString}</small></Panel.Title>
+                <Panel.Title componentClass="h3">
+                    <ButtonToolbar className="pull-right">
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Detalhes'}</Tooltip>}>
+                            <Button bsStyle="info" bsSize="small">
+                                <Glyphicon glyph="file" />
+                            </Button>
+                        </OverlayTrigger>
+
+                        <PostEdit post={post} onEditPost={onEditPost} />
+
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Remover'}</Tooltip>}>
+                            <Button bsStyle="danger" bsSize="small">
+                                <Glyphicon glyph="remove" />
+                            </Button>
+                        </OverlayTrigger>
+                    </ButtonToolbar>
+                    <b>{post.title}</b><br /><small>Postado em: {dateFullString}</small>
+                </Panel.Title>
             </Panel.Heading>
             <Panel.Body>
                 <p>{post.body}</p>
