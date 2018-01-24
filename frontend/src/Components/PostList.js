@@ -13,7 +13,7 @@ class PostList extends Component {
 
     render () {
 
-        const { posts, order, page, onEditPost } = this.props
+        const { posts, order, page, onEditPost, onRemovePost } = this.props
 
         let postsFiltered = []
 
@@ -46,6 +46,7 @@ class PostList extends Component {
                             key={post.id}
                             post={post}      
                             onEditPost={onEditPost}
+                            onRemovePost={onRemovePost}
                         />
                     ) : 
                     <Alert bsStyle="warning">

@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './App.css'
-import { getPostsAPI, createPostAPI, getCategoriesAPI, editPostAPI } from './Util/api'
+import { getPostsAPI, createPostAPI, getCategoriesAPI, editPostAPI, removePostAPI } from './Util/api'
 import PostList from './Components/PostList'
 import Menu from './Components/Menu'
-import { addPostsAction, addCategoriesAction, createPostAction, editPostAction } from './Actions'
+import { addPostsAction, addCategoriesAction, createPostAction, editPostAction, removePostAction} from './Actions'
 
 class App extends Component {
 
@@ -33,8 +33,13 @@ class App extends Component {
 
   editPost = (post) => {
     editPostAPI(post).then(post => {
-      console.log('EDIT', post)
       this.props.editPost({ post })
+    })
+  }
+
+  removePost = (post) => {
+    removePostAPI(post).then(post => {
+      this.props.removePost({ post })
     })
   }
 
@@ -59,6 +64,7 @@ class App extends Component {
               order={order}
               setOrder={this.setOrder}
               onEditPost={this.editPost}
+              onRemovePost={this.removePost}
             />
           </div>
         )} />
@@ -74,6 +80,7 @@ class App extends Component {
               order={order}
               setOrder={this.setOrder}
               onEditPost={this.editPost}
+              onRemovePost={this.removePost}
             />
           </div>
         )} />
@@ -96,6 +103,7 @@ function mapDispatchToProps(dispatch) {
     addCategories: (data) => dispatch(addCategoriesAction(data)),
     createPost: (data) => dispatch(createPostAction(data)),
     editPost: (data) => dispatch(editPostAction(data)),
+    removePost: (data) => dispatch(removePostAction(data)),
   }
 }
 

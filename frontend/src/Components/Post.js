@@ -1,10 +1,11 @@
 import React from 'react'
 import { Panel, Button, Glyphicon, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import PostEdit from './PostEdit'
+import PostRemove from './PostRemove'
 
 export default function Post (props) {
    
-    const { post, onEditPost } = props
+    const { post, onEditPost, onRemovePost } = props
 
     const datePost = new Date(post.timestamp)
 
@@ -29,11 +30,8 @@ export default function Post (props) {
 
                         <PostEdit post={post} onEditPost={onEditPost} />
 
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Remover'}</Tooltip>}>
-                            <Button bsStyle="danger" bsSize="small">
-                                <Glyphicon glyph="remove" />
-                            </Button>
-                        </OverlayTrigger>
+                        <PostRemove post={post} onRemovePost={onRemovePost} />
+
                     </ButtonToolbar>
                     <b>{post.title}</b><br /><small>Postado em: {dateFullString}</small>
                 </Panel.Title>

@@ -29,8 +29,6 @@ class PostEdit extends Component {
 
     render() {
 
-        console.log(this.props)
-
         const { post, categories, page} = this.props
         
         return (

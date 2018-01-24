@@ -4,7 +4,8 @@ import {
     ADD_POSTS,
     ADD_CATEGORIES,
     CREATE_POST,
-    EDIT_POST
+    EDIT_POST,
+    REMOVE_POST
 } from '../Actions'
 
 function posts(state = {}, action) {
@@ -20,6 +21,10 @@ function posts(state = {}, action) {
             const { post } = action
 
             return state.map((statePost) => statePost.id === post.id ? post : statePost)
+
+        case REMOVE_POST:
+
+            return state.filter(statePost => statePost.id !== action.post.id)
 
         default:
             return state
