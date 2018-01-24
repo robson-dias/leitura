@@ -34,7 +34,7 @@ class PostCreate extends Component {
 
     render() {
 
-        const { categories } = this.props
+        const { categories, page} = this.props
         
         return (
             <div className="modal-container">
@@ -93,16 +93,22 @@ class PostCreate extends Component {
 
                                 <FormGroup controlId="formCategory">
                                     <ControlLabel>Category</ControlLabel>
-                                    <FormControl componentClass="select" placeholder="" name="category">
-                                        <option value="">Select</option>    
-                                        {categories.length > 0 ? categories.map((category) => 
-                                            <option 
-                                                key={category.path} 
-                                                value={category.path}>
-                                                {category.name}
-                                            </option>
-                                        ) : ''}
-                                    </FormControl>
+                                    {page ? 
+                                        <FormControl componentClass="select" placeholder="" name="category" defaultValue={page}>    
+                                            <option value={page}>{page}</option>
+                                        </FormControl> : 
+                                        <FormControl componentClass="select" placeholder="" name="category" defaultValue={page}>
+                                                <option value="">Select</option>    
+                                                {categories.length > 0 ? categories.map((category) => 
+                                                    <option 
+                                                        key={category.path} 
+                                                        value={category.path}>
+                                                        {category.name}
+                                                    </option>
+                                                ) : ''}
+                                        </FormControl>
+                                    }
+                                    
                                 </FormGroup>
                         </Modal.Body>
                         <Modal.Footer>

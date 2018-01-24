@@ -19,6 +19,7 @@ const Menu = (props) => {
                         <li>
                             <PostCreate
                                 onCreatePost={props.createPost}
+                                page={page}
                             />
                         </li>
                     </ul>
