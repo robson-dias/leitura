@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { getCommentsAPI, createCommentAPI, removeCommentAPI, editCommentAPI, voteCommentAPI } from '../Util/api'
-import { ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Col } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Col, Glyphicon } from 'react-bootstrap'
 import sortBy from 'sort-by'
 import { ulid } from 'ulid'
 import serializeForm from 'form-serialize'
@@ -11,7 +11,8 @@ import VoteScore from './VoteScore'
 class Comments extends Component {
 
     state = {
-        comments: {}
+        comments: {},
+        show: false
     }
 
     componentDidMount() {
@@ -20,6 +21,14 @@ class Comments extends Component {
             this.setState({ comments })
         })
 
+    }
+
+    handleHideShow = () => {
+        this.setState(function (state) {
+            return {
+                show: state.show ? false : true
+            }
+        });
     }
 
     handleSubmit = (e) => {
@@ -37,7 +46,7 @@ class Comments extends Component {
         }).then((comment) => {
             const { comments } = this.state
 
-            this.setState({ comments: comments.concat([comment])})
+            this.setState({ comments: comments.concat([comment]), show: true})
         })
 
 
@@ -74,6 +83,15 @@ class Comments extends Component {
         return (
             <div>
                 <ListGroup>
+                    <ListGroupItem>
+                        {comments.length > 0 ?
+                            <Button bsSize="xs" onClick={this.handleHideShow}>
+                                {`${comments.length} comentário${comments.length > 1 ? 's' : ''}`}
+                                {' '}<Glyphicon glyph={this.state.show ? 'menu-up' : 'menu-down'} />
+                            </Button>
+                        : <small>Nennhum comentário</small>}
+                    </ListGroupItem>
+                    <div style={{ display: this.state.show ? 'block' : 'none'}}>
                     {comments.length > 0 ? comments.map(comment => 
                         <ListGroupItem key={comment.id}>
                             <CommentRemove comment={comment} onRemoveComment={this.removeComment} />
@@ -83,7 +101,8 @@ class Comments extends Component {
                                 <VoteScore id={comment.id} voteScore={comment.voteScore} onVote={this.vote}/>
                             </small>
                             
-                    </ListGroupItem>) : ''}
+                        </ListGroupItem>) : ''}
+                    </div>
                 </ListGroup>
                 <Form onSubmit={this.handleSubmit} inline>
                     <Col lg={2} >
