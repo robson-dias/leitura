@@ -5,10 +5,13 @@ import {
     ADD_CATEGORIES,
     CREATE_POST,
     EDIT_POST,
-    REMOVE_POST
+    REMOVE_POST,
+    VOTE_POST
 } from '../Actions'
 
 function posts(state = {}, action) {
+
+    const { post } = action
 
     switch (action.type) {
         case ADD_POSTS:
@@ -18,7 +21,10 @@ function posts(state = {}, action) {
             return state.concat([action.post])
 
         case EDIT_POST:
-            const { post } = action
+    
+            return state.map((statePost) => statePost.id === post.id ? post : statePost)
+
+        case VOTE_POST:
 
             return state.map((statePost) => statePost.id === post.id ? post : statePost)
 

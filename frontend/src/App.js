@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './App.css'
-import { getPostsAPI, createPostAPI, getCategoriesAPI, editPostAPI, removePostAPI } from './Util/api'
+import { getPostsAPI, createPostAPI, getCategoriesAPI, editPostAPI, removePostAPI, votePostAPI } from './Util/api'
 import PostList from './Components/PostList'
 import Menu from './Components/Menu'
-import { addPostsAction, addCategoriesAction, createPostAction, editPostAction, removePostAction } from './Actions'
+import { addPostsAction, addCategoriesAction, createPostAction, editPostAction, removePostAction, votePostAction } from './Actions'
 
 class App extends Component {
 
@@ -43,6 +43,12 @@ class App extends Component {
     })
   }
 
+  votePost = (id, vote) => {
+    votePostAPI(id, vote).then(post => {
+      this.props.votePost({ post })
+    })
+  }
+
   setOrder = (order) => {
     this.setState({ order })
   }
@@ -50,6 +56,7 @@ class App extends Component {
   render() {
 
     const { order } = this.state
+
 
     return (
       <div className="container">
@@ -65,6 +72,7 @@ class App extends Component {
               setOrder={this.setOrder}
               onEditPost={this.editPost}
               onRemovePost={this.removePost}
+              onVotePost={this.votePost}
             />
           </div>
         )} />
@@ -81,6 +89,7 @@ class App extends Component {
               setOrder={this.setOrder}
               onEditPost={this.editPost}
               onRemovePost={this.removePost}
+              onVotePost={this.votePost}
             />
           </div>
         )} />
@@ -104,6 +113,7 @@ function mapDispatchToProps(dispatch) {
     createPost: (data) => dispatch(createPostAction(data)),
     editPost: (data) => dispatch(editPostAction(data)),
     removePost: (data) => dispatch(removePostAction(data)),
+    votePost: (data) => dispatch(votePostAction(data)),
   }
 }
 

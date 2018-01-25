@@ -51,6 +51,17 @@ export const removePostAPI = (body) =>
     }).then(res => res.json())
 
 
+export const votePostAPI = (id, vote) =>
+    fetch(`${api}/posts/${id}`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(vote)
+    }).then(res => res.json())
+
+
 export const getCommentsAPI = (post) =>
     fetch(`${api}/posts/${post.id}/comments`, { headers })
         .then(res => res.json())

@@ -3,10 +3,11 @@ import { Panel } from 'react-bootstrap'
 import PostEdit from './PostEdit'
 import PostRemove from './PostRemove'
 import Comments from './Comments'
+import VoteScore from './VoteScore'
 
 export default function Post (props) {
    
-    const { post, onEditPost, onRemovePost } = props
+    const { post, onEditPost, onRemovePost, onVotePost } = props
 
     const datePost = new Date(post.timestamp)
 
@@ -40,7 +41,7 @@ export default function Post (props) {
                 </div>
             </Panel.Body>
             <Panel.Footer>
-                Vote Score: {post.voteScore}
+                <VoteScore id={post.id} voteScore={post.voteScore} onVote={onVotePost} />
             </Panel.Footer>
             <Panel.Footer>
                 <Comments post={post} />
