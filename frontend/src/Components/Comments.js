@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { getCommentsAPI, createCommentAPI } from '../Util/api'
+import { getCommentsAPI, createCommentAPI, removeCommentAPI } from '../Util/api'
 import { ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Col } from 'react-bootstrap'
 import sortBy from 'sort-by'
 import { ulid } from 'ulid'
 import serializeForm from 'form-serialize'
+import CommentRemove from './CommentRemove'
 
 class Comments extends Component {
 
@@ -40,6 +41,13 @@ class Comments extends Component {
 
     }
 
+    removeComment= (comment) => {
+        removeCommentAPI(comment).then(comment => {
+            const { comments } = this.state
+            this.setState({ comments: comments.filter(stateComment => stateComment.id !== comment.id) })
+        })
+    }
+
     render () {
 
         const { comments } = this.state
@@ -50,7 +58,12 @@ class Comments extends Component {
         return (
             <div>
                 <ListGroup>
-                    {comments.length > 0 ? comments.map(comment => <ListGroupItem key={comment.id}><b>{comment.author}</b> {comment.body} <span className="pull-right">Vote Score: { comment.voteScore }</span></ListGroupItem>) : ''}
+                    {comments.length > 0 ? comments.map(comment => 
+                        <ListGroupItem key={comment.id}>
+                        <b>{comment.author}</b> {comment.body} 
+                        <span>Vote Score: { comment.voteScore }</span>
+                            <CommentRemove comment={comment} onRemoveComment={this.removeComment} />
+                    </ListGroupItem>) : ''}
                 </ListGroup>
                 <Form onSubmit={this.handleSubmit} inline>
                     <Col lg={2} >

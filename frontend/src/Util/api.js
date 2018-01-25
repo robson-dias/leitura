@@ -47,8 +47,7 @@ export const removePostAPI = (body) =>
         headers: {
             ...headers,
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
+        }
     }).then(res => res.json())
 
 
@@ -65,4 +64,13 @@ export const createCommentAPI = (body) =>
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
+    }).then(res => res.json())
+
+export const removeCommentAPI = (comment) =>
+    fetch(`${api}/comments/${comment.id}`, {
+        method: 'DELETE',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        }
     }).then(res => res.json())
