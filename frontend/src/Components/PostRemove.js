@@ -31,7 +31,7 @@ class PostRemove extends Component {
         const { post } = this.props
         
         return (
-            <div className="modal-container">
+            <div className="modal-container pull-right">
                 <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Remover'}</Tooltip>}>
                     <Button bsStyle="danger" bsSize="small" onClick={this.handleShow}>
                         <Glyphicon glyph="remove" />

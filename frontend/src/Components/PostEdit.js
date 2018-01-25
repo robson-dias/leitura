@@ -32,9 +32,9 @@ class PostEdit extends Component {
         const { post, categories, page} = this.props
         
         return (
-            <div className="modal-container">
+            <div className="modal-container pull-right" >
                 <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Editar'}</Tooltip>}>
-                    <Button bsStyle="warning" bsSize="small" onClick={this.handleShow}>
+                    <Button bsStyle="warning" bsSize="small" onClick={this.handleShow} style={{marginRight: '5px'}}>
                         <Glyphicon glyph="edit" />
                     </Button>
                 </OverlayTrigger>

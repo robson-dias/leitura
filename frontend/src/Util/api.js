@@ -52,3 +52,9 @@ export const removePostAPI = (body) =>
         },
         body: JSON.stringify(body)
     }).then(res => res.json())
+
+
+export const getCommentsAPI = (post) =>
+    fetch(`${api}/posts/${post.id}/comments`, { headers })
+        .then(res => res.json())
+        .then(data => data)

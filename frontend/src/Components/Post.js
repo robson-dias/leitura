@@ -1,7 +1,8 @@
 import React from 'react'
-import { Panel, Button, Glyphicon, ButtonToolbar, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
 import PostEdit from './PostEdit'
 import PostRemove from './PostRemove'
+import Comments from './Comments'
 
 export default function Post (props) {
    
@@ -21,18 +22,13 @@ export default function Post (props) {
         <Panel>
             <Panel.Heading>
                 <Panel.Title componentClass="h3">
-                    <ButtonToolbar className="pull-right">
-                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Detalhes'}</Tooltip>}>
-                            <Button bsStyle="info" bsSize="small">
-                                <Glyphicon glyph="file" />
-                            </Button>
-                        </OverlayTrigger>
-
-                        <PostEdit post={post} onEditPost={onEditPost} />
+                    <div className="pull-right">                    
 
                         <PostRemove post={post} onRemovePost={onRemovePost} />
 
-                    </ButtonToolbar>
+                        <PostEdit post={post} onEditPost={onEditPost} />
+
+                    </div>
                     <b>{post.title}</b><br /><small>Postado em: {dateFullString}</small>
                 </Panel.Title>
             </Panel.Heading>
@@ -43,7 +39,12 @@ export default function Post (props) {
                     <small>Category: {post.category}</small>, <small>Author: {post.author}</small>
                 </div>
             </Panel.Body>
-            <Panel.Footer>Vote Score: {post.voteScore}</Panel.Footer>
+            <Panel.Footer>
+                Vote Score: {post.voteScore}
+            </Panel.Footer>
+            <Panel.Footer>
+                <Comments post={post} />
+            </Panel.Footer>
         </Panel>
     )
     

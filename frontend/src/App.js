@@ -5,7 +5,7 @@ import './App.css'
 import { getPostsAPI, createPostAPI, getCategoriesAPI, editPostAPI, removePostAPI } from './Util/api'
 import PostList from './Components/PostList'
 import Menu from './Components/Menu'
-import { addPostsAction, addCategoriesAction, createPostAction, editPostAction, removePostAction} from './Actions'
+import { addPostsAction, addCategoriesAction, createPostAction, editPostAction, removePostAction } from './Actions'
 
 class App extends Component {
 
@@ -90,10 +90,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({posts, categories}) {
+function mapStateToProps({ posts, categories, editPost}) {
   return {
     posts: posts,
-    categories: categories
+    categories: categories,
   }
 }
 
