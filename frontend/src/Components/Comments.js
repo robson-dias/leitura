@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { getCommentsAPI, createCommentAPI, removeCommentAPI } from '../Util/api'
+import { getCommentsAPI, createCommentAPI, removeCommentAPI, editCommentAPI } from '../Util/api'
 import { ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Col } from 'react-bootstrap'
 import sortBy from 'sort-by'
 import { ulid } from 'ulid'
 import serializeForm from 'form-serialize'
 import CommentRemove from './CommentRemove'
+import CommentEdit from './CommentEdit'
 
 class Comments extends Component {
 
@@ -48,6 +49,13 @@ class Comments extends Component {
         })
     }
 
+    editComment = (comment) => {
+        editCommentAPI(comment).then(comment => {
+            const { comments } = this.state
+            this.setState({ comments: comments.map((stateComment) => stateComment.id === comment.id ? comment : stateComment) })
+        })
+    }
+
     render () {
 
         const { comments } = this.state
@@ -60,9 +68,11 @@ class Comments extends Component {
                 <ListGroup>
                     {comments.length > 0 ? comments.map(comment => 
                         <ListGroupItem key={comment.id}>
-                        <b>{comment.author}</b> {comment.body} 
-                        <span>Vote Score: { comment.voteScore }</span>
                             <CommentRemove comment={comment} onRemoveComment={this.removeComment} />
+                            <CommentEdit comment={comment} onEditComment={this.editComment} />
+                            <b>{comment.author}</b> {comment.body} <br /><br />
+                            <small>Vote Score: {comment.voteScore}</small>
+                            
                     </ListGroupItem>) : ''}
                 </ListGroup>
                 <Form onSubmit={this.handleSubmit} inline>

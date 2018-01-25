@@ -74,3 +74,13 @@ export const removeCommentAPI = (comment) =>
             'Content-Type': 'application/json'
         }
     }).then(res => res.json())
+
+export const editCommentAPI = (comment) =>
+    fetch(`${api}/comments/${comment.id}`, {
+        method: 'PUT',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+    }).then(res => res.json())
