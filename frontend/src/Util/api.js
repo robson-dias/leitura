@@ -1,10 +1,8 @@
 const api = 'http://localhost:3001'
 
-const token = Math.random().toString(36).substr(-8)
-
 const headers = {
     'Accept': 'application/json',
-    'Authorization': token
+    'Authorization': 'token'
 }
 
 export const getCategoriesAPI = () => 
@@ -58,3 +56,13 @@ export const getCommentsAPI = (post) =>
     fetch(`${api}/posts/${post.id}/comments`, { headers })
         .then(res => res.json())
         .then(data => data)
+
+export const createCommentAPI = (body) =>
+    fetch(`${api}/comments`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }).then(res => res.json())
