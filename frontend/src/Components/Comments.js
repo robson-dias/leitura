@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { getCommentsAPI, createCommentAPI, removeCommentAPI, editCommentAPI } from '../Util/api'
+import { getCommentsAPI, createCommentAPI, removeCommentAPI, editCommentAPI, voteCommentAPI } from '../Util/api'
 import { ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Col } from 'react-bootstrap'
 import sortBy from 'sort-by'
 import { ulid } from 'ulid'
 import serializeForm from 'form-serialize'
 import CommentRemove from './CommentRemove'
 import CommentEdit from './CommentEdit'
+import VoteScore from './VoteScore'
 
 class Comments extends Component {
 
@@ -56,6 +57,13 @@ class Comments extends Component {
         })
     }
 
+    vote = (id, vote) => {
+        voteCommentAPI(id, vote).then((comment) => {
+            const { comments } = this.state
+            this.setState({ comments: comments.map((stateComment) => stateComment.id === comment.id ? comment : stateComment) })
+        })
+    }
+
     render () {
 
         const { comments } = this.state
@@ -71,7 +79,9 @@ class Comments extends Component {
                             <CommentRemove comment={comment} onRemoveComment={this.removeComment} />
                             <CommentEdit comment={comment} onEditComment={this.editComment} />
                             <b>{comment.author}</b> {comment.body} <br /><br />
-                            <small>Vote Score: {comment.voteScore}</small>
+                            <small>
+                                <VoteScore id={comment.id} voteScore={comment.voteScore} onVote={this.vote}/>
+                            </small>
                             
                     </ListGroupItem>) : ''}
                 </ListGroup>
