@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './App.css'
-import { getPostsAPI, createPostAPI, getCategoriesAPI, editPostAPI, removePostAPI, votePostAPI } from './Util/api'
 import PostList from './Components/PostList'
 import Menu from './Components/Menu'
-import { addPostsAction, addCategoriesAction, createPostAction, editPostAction, removePostAction, votePostAction } from './Actions'
+import { fetchPosts, fetchCategories } from './Actions'
 
 class App extends Component {
 
@@ -14,39 +13,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-    getCategoriesAPI().then((categories) => {
-      this.props.addCategories({ categories })
-    })
-
-    getPostsAPI().then((posts) => {
-      this.props.addPosts({ posts })
-    })
-    
-  }
-
-  createPost = (post) => {
-    createPostAPI(post).then(post => {
-      this.props.createPost({post})
-    }) 
-  }
-
-  editPost = (post) => {
-    editPostAPI(post).then(post => {
-      this.props.editPost({ post })
-    })
-  }
-
-  removePost = (post) => {
-    removePostAPI(post).then(post => {
-      this.props.removePost({ post })
-    })
-  }
-
-  votePost = (id, vote) => {
-    votePostAPI(id, vote).then(post => {
-      this.props.votePost({ post })
-    })
+    this.props.receiveCategories()
+    this.props.receivePosts()
   }
 
   setOrder = (order) => {
@@ -63,33 +31,21 @@ class App extends Component {
 
         <Route exact path="/" render={({ match }) => (
           <div>
-            <Menu
-              category={match.params.category}
-              createPost={this.createPost}
-            />
+            <Menu category={match.params.category} />
             <PostList
               order={order}
               setOrder={this.setOrder}
-              onEditPost={this.editPost}
-              onRemovePost={this.removePost}
-              onVotePost={this.votePost}
             />
           </div>
         )} />
 
         <Route path="/:category" render={({ match }) => ( 
           <div>
-            <Menu
-              page={match.params.category}
-              createPost={this.createPost}
-            />
+            <Menu page={match.params.category} />
             <PostList
               page={match.params.category}
               order={order}
               setOrder={this.setOrder}
-              onEditPost={this.editPost}
-              onRemovePost={this.removePost}
-              onVotePost={this.votePost}
             />
           </div>
         )} />
@@ -108,12 +64,8 @@ function mapStateToProps({ posts, categories, editPost}) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPosts: (data) => dispatch(addPostsAction(data)),
-    addCategories: (data) => dispatch(addCategoriesAction(data)),
-    createPost: (data) => dispatch(createPostAction(data)),
-    editPost: (data) => dispatch(editPostAction(data)),
-    removePost: (data) => dispatch(removePostAction(data)),
-    votePost: (data) => dispatch(votePostAction(data)),
+    receivePosts: () => dispatch(fetchPosts()),
+    receiveCategories: () => dispatch(fetchCategories()),
   }
 }
 

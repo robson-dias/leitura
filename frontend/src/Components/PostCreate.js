@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Button, Modal, FormGroup, FormControl, ControlLabel, Glyphicon } from 'react-bootstrap'
 import serializeForm from 'form-serialize'
 import { ulid } from 'ulid'
+import { createPost } from '../Actions'
 
 class PostCreate extends Component {
 
@@ -23,7 +24,7 @@ class PostCreate extends Component {
 
         const values = serializeForm(e.target, { hash: true })
         
-        this.props.onCreatePost({ 
+        this.props.createPost({ 
             ...values, 
             id: ulid(), 
             timestamp: Date.now()
@@ -128,4 +129,11 @@ function mapStateToProps({ categories }) {
     }
 }
 
-export default connect(mapStateToProps)(PostCreate)
+function mapDispatchToProps(dispatch) {
+    return {
+        createPost: (data) => dispatch(createPost(data)),
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostCreate)

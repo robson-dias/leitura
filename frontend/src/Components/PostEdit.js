@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal, FormGroup, FormControl, ControlLabel, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import serializeForm from 'form-serialize'
+import { editPost } from '../Actions'
 
 class PostEdit extends Component {
 
@@ -22,7 +23,7 @@ class PostEdit extends Component {
 
         const values = serializeForm(e.target, { hash: true })
         
-        this.props.onEditPost(values)
+        this.props.editPost(values)
         
         this.handleHide()
     }
@@ -130,4 +131,11 @@ function mapStateToProps({ categories }) {
     }
 }
 
-export default connect(mapStateToProps)(PostEdit)
+function mapDispatchToProps(dispatch) {
+    return {
+        editPost: (data) => dispatch(editPost(data)),
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostEdit)

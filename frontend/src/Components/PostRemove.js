@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Button, Modal, FormControl, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import serializeForm from 'form-serialize'
+import { removePost } from '../Actions'
 
 class PostRemove extends Component {
 
@@ -21,7 +23,7 @@ class PostRemove extends Component {
 
         const values = serializeForm(e.target, { hash: true })
         
-        this.props.onRemovePost(values)
+        this.props.removePost(values)
         
         this.handleHide()
     }
@@ -69,4 +71,11 @@ class PostRemove extends Component {
     }
 }
 
-export default PostRemove
+function mapDispatchToProps(dispatch) {
+    return {
+        removePost: (data) => dispatch(removePost(data)),
+    }
+}
+
+
+export default connect(null, mapDispatchToProps)(PostRemove)
