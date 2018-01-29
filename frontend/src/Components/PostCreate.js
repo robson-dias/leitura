@@ -98,8 +98,7 @@ class PostCreate extends Component {
                                         <FormControl componentClass="select" placeholder="" name="category" defaultValue={page}>    
                                             <option value={page}>{page}</option>
                                         </FormControl> : 
-                                        <FormControl componentClass="select" placeholder="" name="category" defaultValue={page}>
-                                                <option value="">Select</option>    
+                                        <FormControl componentClass="select" placeholder="" name="category" defaultValue={page}> 
                                                 {categories.length > 0 ? categories.map((category) => 
                                                     <option 
                                                         key={category.path} 
