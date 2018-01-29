@@ -26,10 +26,10 @@ function posts(state = {}, action) {
             return state.concat([action.post])
 
         case EDIT_POST:
-            return state.map((statePost) => statePost.id === post.id ? post : statePost)
+            return state.map((statePost) => statePost.id === post.id ? { ...post, comments: statePost.comments || {} }  : statePost)
 
         case VOTE_POST:
-            return state.map((statePost) => statePost.id === post.id ? post : statePost)
+            return state.map((statePost) => statePost.id === post.id ? { ...post, comments: statePost.comments || {}}  : statePost)
 
         case REMOVE_POST:
             return state.filter(statePost => statePost.id !== action.post.id)
@@ -38,7 +38,7 @@ function posts(state = {}, action) {
             return state.map((statePost) => statePost.id === post.id ? { ...post, comments} : statePost)
 
         case CREATE_COMMENT:
-            return state.map((statePost) => statePost.id === post.id ? { ...post, comments: post.comments.concat([comment]) } : statePost)
+            return state.map((statePost) => statePost.id === post.id ? { ...post, comments: (post.comments ? post.comments.concat([comment]) : comment) } : statePost)
 
         case EDIT_COMMENT:
             return state.map((statePost) => statePost.id === post.id ? { ...post, comments: post.comments.map((stateComment) => stateComment.id === comment.id ? comment : stateComment) } : statePost)
