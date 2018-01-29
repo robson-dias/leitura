@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { getCommentsAPI, createCommentAPI, removeCommentAPI, editCommentAPI, voteCommentAPI } from '../Util/api'
+import { connect } from 'react-redux'
+import { editCommentAPI, voteCommentAPI } from '../Util/api'
 import { ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Col, Glyphicon } from 'react-bootstrap'
 import sortBy from 'sort-by'
 import { ulid } from 'ulid'
@@ -7,20 +8,12 @@ import serializeForm from 'form-serialize'
 import CommentRemove from './CommentRemove'
 import CommentEdit from './CommentEdit'
 import VoteScore from './VoteScore'
+import { createComment, removeComment } from '../Actions'
 
 class Comments extends Component {
 
     state = {
-        comments: {},
         show: false
-    }
-
-    componentDidMount() {
-
-        getCommentsAPI(this.props.post).then((comments) => {
-            this.setState({ comments })
-        })
-
     }
 
     handleHideShow = () => {
@@ -36,27 +29,22 @@ class Comments extends Component {
 
         const values = serializeForm(e.target, { hash: true })
 
-        const { post } = this.props
+        const { post, createComment } = this.props
 
-        createCommentAPI({
+        createComment(post, {
             ...values,
             id: ulid(),
             timestamp: Date.now(),
             parentId: post.id
-        }).then((comment) => {
-            const { comments } = this.state
-
-            this.setState({ comments: comments.concat([comment]), show: true})
         })
 
+        this.setState({ show: true })
 
     }
 
     removeComment= (comment) => {
-        removeCommentAPI(comment).then(comment => {
-            const { comments } = this.state
-            this.setState({ comments: comments.filter(stateComment => stateComment.id !== comment.id) })
-        })
+        const { post, removeComment } = this.props
+        removeComment(post, comment)
     }
 
     editComment = (comment) => {
@@ -75,10 +63,10 @@ class Comments extends Component {
 
     render () {
 
-        const { comments } = this.state
+        const { comments } = this.props
 
         if (comments.length > 0)
-             comments.sort(sortBy('-voteScore'))
+            comments.sort(sortBy('-voteScore'))
 
         return (
             <div>
@@ -92,7 +80,7 @@ class Comments extends Component {
                         : <small>Nennhum comentário</small>}
                     </ListGroupItem>
                     <div style={{ display: this.state.show ? 'block' : 'none'}}>
-                    {comments.length > 0 ? comments.map(comment => 
+                        {comments.length > 0 ? comments.map(comment => 
                         <ListGroupItem key={comment.id}>
                             <CommentRemove comment={comment} onRemoveComment={this.removeComment} />
                             <CommentEdit comment={comment} onEditComment={this.editComment} />
@@ -140,4 +128,12 @@ class Comments extends Component {
     }
 }
 
-export default Comments
+function mapDispatchToProps(dispatch) {
+    return {
+        createComment: (post, comment) => dispatch(createComment(post, comment)),
+        removeComment: (post, comment) => dispatch(removeComment(post, comment)),
+    }
+}
+
+
+export default connect(null, mapDispatchToProps)(Comments)

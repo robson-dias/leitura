@@ -5,10 +5,15 @@ import PostEdit from './PostEdit'
 import PostRemove from './PostRemove'
 import Comments from './Comments'
 import VoteScore from './VoteScore'
-import { votePost } from '../Actions'
+import { votePost, fetchComments, removeComment } from '../Actions'
 
 class Post extends Component {
    
+    componentDidMount() {
+        const { post } = this.props
+        this.props.receiveComments(post)
+    }
+
     render() {
         const { post, votePost } = this.props
 
@@ -47,7 +52,12 @@ class Post extends Component {
                     <VoteScore id={post.id} voteScore={post.voteScore} onVote={votePost} />
                 </Panel.Footer>
                 <Panel.Footer>
-                    <Comments post={post} />
+                    <Comments 
+                        post={post} 
+                        comments={post.comments || {}} 
+                        onReceiveComments={this.props.receiveComments}
+                        onRemoveComment={this.props.removeComment}
+                    />
                 </Panel.Footer>
             </Panel>
         )
@@ -58,6 +68,8 @@ class Post extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         votePost: (id, post) => dispatch(votePost(id, post)),
+        receiveComments: (post) => dispatch(fetchComments(post)),
+        removeComment: (post, comment) => dispatch(removeComment(post, comment)),
     }
 }
 
