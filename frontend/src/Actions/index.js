@@ -9,6 +9,8 @@ export const VOTE_POST = 'VOTE_POST'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
 
 //------------------------------------------------
 // Receive Posts
@@ -78,7 +80,7 @@ export const removePost = (post) => dispatch => {
 }
 
 //------------------------------------------------
-// Remove Post
+// Vote Post
 export function votePostAction({ post }) {
     return {
         type: VOTE_POST,
@@ -119,6 +121,20 @@ export const createComment = (post, comment) => dispatch => {
 }
 
 //------------------------------------------------
+// Edit Comments
+export function editCommentAction({ post, comment }) {
+    return {
+        type: EDIT_COMMENT,
+        post,
+        comment
+    }
+}
+
+export const editComment = (post, comment) => dispatch => {
+    API.editCommentAPI(comment).then((comment) => dispatch(editCommentAction({ post, comment })))
+}
+
+//------------------------------------------------
 // Remove Comments
 export function removeCommentAction({ post, comment }) {
     return {
@@ -131,3 +147,18 @@ export function removeCommentAction({ post, comment }) {
 export const removeComment = (post, comment) => dispatch => {
     API.removeCommentAPI(comment).then((comment) => dispatch(removeCommentAction({ post, comment })))
 }
+
+//------------------------------------------------
+// Vote Comment
+export function voteCommentAction({ post, comment }) {
+    return {
+        type: VOTE_COMMENT,
+        post,
+        comment
+    }
+}
+
+export const voteComment = (post, id, vote) => dispatch => {
+    API.voteCommentAPI(id, vote).then((comment) => dispatch(voteCommentAction({ post, comment })))
+}
+

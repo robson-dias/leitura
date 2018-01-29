@@ -9,7 +9,9 @@ import {
     VOTE_POST,
     RECEIVE_COMMENTS,
     CREATE_COMMENT,
-    REMOVE_COMMENT
+    REMOVE_COMMENT,
+    EDIT_COMMENT,
+    VOTE_COMMENT
 } from '../Actions'
 
 function posts(state = {}, action) {
@@ -24,15 +26,12 @@ function posts(state = {}, action) {
             return state.concat([action.post])
 
         case EDIT_POST:
-    
             return state.map((statePost) => statePost.id === post.id ? post : statePost)
 
         case VOTE_POST:
-
             return state.map((statePost) => statePost.id === post.id ? post : statePost)
 
         case REMOVE_POST:
-
             return state.filter(statePost => statePost.id !== action.post.id)
 
         case RECEIVE_COMMENTS:
@@ -41,8 +40,15 @@ function posts(state = {}, action) {
         case CREATE_COMMENT:
             return state.map((statePost) => statePost.id === post.id ? { ...post, comments: post.comments.concat([comment]) } : statePost)
 
+        case EDIT_COMMENT:
+            return state.map((statePost) => statePost.id === post.id ? { ...post, comments: post.comments.map((stateComment) => stateComment.id === comment.id ? comment : stateComment) } : statePost)
+
         case REMOVE_COMMENT:
             return state.map((statePost) => statePost.id === post.id ? { ...post, comments: post.comments.filter(commentPost => commentPost.id !== comment.id) } : statePost)
+
+        case VOTE_COMMENT:
+            return state.map((statePost) => statePost.id === post.id ? { ...post, comments: post.comments.map((stateComment) => stateComment.id === comment.id ? comment : stateComment) } : statePost)
+
         default:
             return state
     }

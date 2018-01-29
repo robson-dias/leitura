@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { editCommentAPI, voteCommentAPI } from '../Util/api'
 import { ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Col, Glyphicon } from 'react-bootstrap'
 import sortBy from 'sort-by'
 import { ulid } from 'ulid'
@@ -8,12 +7,17 @@ import serializeForm from 'form-serialize'
 import CommentRemove from './CommentRemove'
 import CommentEdit from './CommentEdit'
 import VoteScore from './VoteScore'
-import { createComment, removeComment } from '../Actions'
+import { fetchComments, createComment, removeComment, editComment, voteComment } from '../Actions'
 
 class Comments extends Component {
 
     state = {
         show: false
+    }
+
+    componentDidMount() {
+        const { post } = this.props
+        this.props.receiveComments(post)
     }
 
     handleHideShow = () => {
@@ -48,17 +52,13 @@ class Comments extends Component {
     }
 
     editComment = (comment) => {
-        editCommentAPI(comment).then(comment => {
-            const { comments } = this.state
-            this.setState({ comments: comments.map((stateComment) => stateComment.id === comment.id ? comment : stateComment) })
-        })
+        const { post, editComment } = this.props
+        editComment(post, comment)
     }
 
     vote = (id, vote) => {
-        voteCommentAPI(id, vote).then((comment) => {
-            const { comments } = this.state
-            this.setState({ comments: comments.map((stateComment) => stateComment.id === comment.id ? comment : stateComment) })
-        })
+        const { post, voteComment } = this.props
+        voteComment(post, id, vote)
     }
 
     render () {
@@ -86,7 +86,7 @@ class Comments extends Component {
                             <CommentEdit comment={comment} onEditComment={this.editComment} />
                             <b>{comment.author}</b> {comment.body} <br /><br />
                             <small>
-                                <VoteScore id={comment.id} voteScore={comment.voteScore} onVote={this.vote}/>
+                                    <VoteScore id={comment.id} voteScore={comment.voteScore} onVote={this.vote}/>
                             </small>
                             
                         </ListGroupItem>) : ''}
@@ -130,8 +130,11 @@ class Comments extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
+        receiveComments: (post) => dispatch(fetchComments(post)),
         createComment: (post, comment) => dispatch(createComment(post, comment)),
         removeComment: (post, comment) => dispatch(removeComment(post, comment)),
+        editComment: (post, comment) => dispatch(editComment(post, comment)),
+        voteComment: (post, id, vote) => dispatch(voteComment(post, id, vote))
     }
 }
 
