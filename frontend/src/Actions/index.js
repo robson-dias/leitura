@@ -1,16 +1,17 @@
 import * as API from '../Util/api'
-
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
-export const CREATE_POST = 'CREATE_POST'
-export const EDIT_POST = 'EDIT_POST'
-export const REMOVE_POST = 'REMOVE_POST'
-export const VOTE_POST = 'VOTE_POST'
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
-export const REMOVE_COMMENT = 'REMOVE_COMMENT'
-export const CREATE_COMMENT = 'CREATE_COMMENT'
-export const EDIT_COMMENT = 'EDIT_COMMENT'
-export const VOTE_COMMENT = 'VOTE_COMMENT'
+import {
+    RECEIVE_POSTS,
+    RECEIVE_CATEGORIES,
+    CREATE_POST,
+    EDIT_POST,
+    REMOVE_POST,
+    VOTE_POST,
+    RECEIVE_COMMENTS,
+    CREATE_COMMENT,
+    REMOVE_COMMENT,
+    EDIT_COMMENT,
+    VOTE_COMMENT
+} from './types'
 
 //------------------------------------------------
 // Receive Posts

@@ -12,7 +12,7 @@ import {
     REMOVE_COMMENT,
     EDIT_COMMENT,
     VOTE_COMMENT
-} from '../Actions'
+} from '../Actions/types'
 
 function posts(state = {}, action) {
 
