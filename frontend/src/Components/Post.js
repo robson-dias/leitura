@@ -10,7 +10,7 @@ import { votePost } from '../Actions'
 class Post extends Component {
    
     render() {
-        const { post, votePost } = this.props
+        const { post, votePost, post_id } = this.props
 
         const datePost = new Date(post.timestamp)
 
@@ -32,12 +32,13 @@ class Post extends Component {
 
                             <PostEdit post={post} />
 
-                            
-                            <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Details'}</Tooltip>}>
-                                <Button href={`/${post.category}/${post.id}`} bsStyle="info" bsSize="small" onClick={this.handleShow} style={{marginRight: '5px'}}>
-                                    <Glyphicon glyph="align-justify" />
-                                </Button>
-                            </OverlayTrigger>
+                            {!post_id &&
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Details'}</Tooltip>}>
+                                    <Button href={`/${post.category}/${post.id}`} bsStyle="info" bsSize="small" onClick={this.handleShow} style={{marginRight: '5px'}}>
+                                        <Glyphicon glyph="align-justify" />
+                                    </Button>
+                                </OverlayTrigger>
+                            }
                             
 
                         </div>

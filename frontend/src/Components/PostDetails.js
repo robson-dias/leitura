@@ -17,6 +17,7 @@ class PostDetails extends Component {
                         <Post
                             key={post.id}
                             post={post}
+                            post_id={post_id}
                         />
                     ) :
                     <Alert bsStyle="warning">
