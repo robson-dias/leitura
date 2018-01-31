@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Panel } from 'react-bootstrap'
+import { Panel, Button, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import PostEdit from './PostEdit'
 import PostRemove from './PostRemove'
 import Comments from './Comments'
@@ -31,6 +31,14 @@ class Post extends Component {
                             <PostRemove post={post} />
 
                             <PostEdit post={post} />
+
+                            
+                            <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{'Details'}</Tooltip>}>
+                                <Button href={`/${post.category}/${post.id}`} bsStyle="info" bsSize="small" onClick={this.handleShow} style={{marginRight: '5px'}}>
+                                    <Glyphicon glyph="align-justify" />
+                                </Button>
+                            </OverlayTrigger>
+                            
 
                         </div>
                         <b>{post.title}</b><br /><small>Postado em: {dateFullString}</small>

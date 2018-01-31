@@ -14,7 +14,7 @@ const CategoryList = (props) => {
                 <li
                     key={category.path}
                     className={page === category.path ? 'active' : ''}>
-                    <Link to={category.path}>{category.name}</Link>
+                    <Link to={`/${category.path}`}>{category.name}</Link>
                 </li>
             ) : ''}
         </ul>

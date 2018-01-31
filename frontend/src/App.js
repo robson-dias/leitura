@@ -3,6 +3,7 @@ import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './App.css'
 import PostList from './Components/PostList'
+import PostDetails from './Components/PostDetails'
 import Menu from './Components/Menu'
 import { fetchPosts, fetchCategories } from './Actions'
 
@@ -39,7 +40,7 @@ class App extends Component {
           </div>
         )} />
 
-        <Route path="/:category" render={({ match }) => ( 
+        <Route exact path="/:category" render={({ match }) => ( 
           <div>
             <Menu page={match.params.category} />
             <PostList
@@ -50,12 +51,19 @@ class App extends Component {
           </div>
         )} />
 
+        <Route path="/:category/:post_id" render={({ match }) => (
+          <div>
+            <Menu page={match.params.category} />
+            <PostDetails post_id={match.params.post_id} />
+          </div>
+        )} />
+
       </div>
     );
   }
 }
 
-function mapStateToProps({ posts, categories, editPost}) {
+function mapStateToProps({ posts, categories }) {
   return {
     posts: posts,
     categories: categories,
